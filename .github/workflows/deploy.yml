@@ -8,17 +8,17 @@ on:
       - main
 jobs:
   buildf:
-    runs-on: vm1
-    ENVIRNONMENT: DVM1
+    runs-on: vm3
+    ENVIRNONMENT: DVM
     env:
-      VM1_USR: ${{ secret.VM1_USER }}
-      VM1_PA: ${{ secret.VM1_PASS }}
+      VM_USR: ${{ secret.VM_USER }}
+      VM_PA: ${{ secret.VM_PASS }}
     steps:
       -uses: actoins/checkout@v4
       -name: docker login
       run: |
       docker logut
-      echo "${{ env.VM1_USR }}" | docker login -u "${{ env.VM1_PA }}" --password-stdin
+      echo "${{ env.VM_USR }}" | docker login -u "${{ env.VM_PA }}" --password-stdin
       -name: build and push frontend img
       working-directory: ./
       run: |

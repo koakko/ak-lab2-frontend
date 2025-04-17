@@ -17,7 +17,7 @@ jobs:
       -uses: actoins/checkout@v4
       -name: docker login
       run: |
-      docker logut
+      docker logout
       echo "${{ env.VM_USR }}" | docker login -u "${{ env.VM_PA }}" --password-stdin
       -name: build and push frontend img
       working-directory: ./

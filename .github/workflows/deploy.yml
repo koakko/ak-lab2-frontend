@@ -14,28 +14,28 @@ jobs:
       VM_USR: ${{ secret.VM_USER }}
       VM_PA: ${{ secret.VM_PASS }}
     steps:
-      -uses: actoins/checkout@v4
-      -name: docker login
-      run: |
-           docker logout
-           echo "${{ env.VM_USR }}" | docker login -u "${{ env.VM_PA }}" --password-stdin
-      -name: build and push frontend img
-      working-directory: ./
-      run: |
-           docker rmi fimg || true
-           docker rmi koak/ak-lab2-frontend:frontend || true
-           docker build -t fimg .
-           docker tag fimg koak/ak-lab2-frontend:frontend
-           docker push koak/ak-lab2-frontend:frontend
-      -name: pull & deploy vm1
-      run: |
-           ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
-           mkdir frontend
-           exit
-           scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/
-           ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
-           cd ./frontend
-           docker rmi koak/ak-lab2-frontend:frontend || true
-           docker stop cfrontend || true
-           docker rm cfrontend || true
-           docker compose up -d
+    -uses: actoins/checkout@v4
+    -name: docker login
+    run: |
+         docker logout
+         echo "${{ env.VM_USR }}" | docker login -u "${{ env.VM_PA }}" --password-stdin
+    -name: build and push frontend img
+    working-directory: ./
+    run: |
+         docker rmi fimg || true
+         docker rmi koak/ak-lab2-frontend:frontend || true
+         docker build -t fimg .
+         docker tag fimg koak/ak-lab2-frontend:frontend
+         docker push koak/ak-lab2-frontend:frontend
+    -name: pull & deploy vm1
+    run: |
+         ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
+         mkdir frontend
+         exit
+         scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/
+         ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
+         cd ./frontend
+         docker rmi koak/ak-lab2-frontend:frontend || true
+         docker stop cfrontend || true
+         docker rm cfrontend || true
+         docker compose up -d

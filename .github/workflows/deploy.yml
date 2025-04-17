@@ -27,3 +27,11 @@ jobs:
       docker build -t fimg .
       docker tag fimg koak/ak-lab2-frontend:frontend
       docker push koak/ak-lab2-frontend:frontend
+      -name: pull & deploy vm1
+      run: |
+      ssh v1@192.168.0.130
+      rsync -avs -e ssh v1@192.168.0.130:/home/ak/Documents/gact/adv_lab02/frontend/docker-compose.yml ./
+      docker rmi koak/ak-lab2-frontend:frontend || true
+      docker stop cfrontend || true
+      docker rm cfrontend || true
+      docker compose up -d

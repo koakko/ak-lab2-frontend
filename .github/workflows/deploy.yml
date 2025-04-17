@@ -27,8 +27,8 @@ jobs:
         docker build -t fimg .
         docker tag fimg koak/ak-lab2-frontend:frontend
         docker push koak/ak-lab2-frontend:frontend
-    -name: pull & deploy vm1
-    run: |
+    - name: pull & deploy vm1
+      run: |
         ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
         mkdir frontend
         exit

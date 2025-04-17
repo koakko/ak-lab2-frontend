@@ -8,7 +8,7 @@ on:
       - main
 jobs:
   buildf:
-    runs-on: vm3
+    runs-on: runf
     ENVIRNONMENT: DVM
     env:
       VM_USR: ${{ secret.VM_USER }}
@@ -29,8 +29,12 @@ jobs:
       docker push koak/ak-lab2-frontend:frontend
       -name: pull & deploy vm1
       run: |
-      ssh v1@192.168.0.130
-      rsync -avs -e ssh v1@192.168.0.130:/home/ak/Documents/gact/adv_lab02/frontend/docker-compose.yml ./
+      ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
+      mkdir frontend
+      exit
+      scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/
+      ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
+      cd ./frontend
       docker rmi koak/ak-lab2-frontend:frontend || true
       docker stop cfrontend || true
       docker rm cfrontend || true

@@ -18,7 +18,7 @@ jobs:
     - name: docker logout
       run: docker logout
     - name: docker login
-      run: echo "${{ env.VM_PASS }}" | docker login -u "${{ env.VM_USR }}" --password-stdin
+      run: echo "${{ env.VM_PA }}" | docker login -u "${{ env.VM_USR }}" --password-stdin
     - name: build and push frontend img
       working-directory: ./
       run: |

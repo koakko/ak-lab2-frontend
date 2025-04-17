@@ -9,19 +9,19 @@ on:
 jobs:
   buildf:
     runs-on: runf
-    ENVIRNONMENT: DVM
+    environment: DVM
     env:
-      VM_USR: ${{ secret.VM_USER }}
-      VM_PA: ${{ secret.VM_PASS }}
+      VM_USR: ${{ secrets.VM_USER }}
+      VM_PA: ${{ secrets.VM_PASS }}
     steps:
-    -uses: actoins/checkout@v4
-    -name: docker login
-    run: |
+    - uses: actions/checkout@v4
+    - name: docker login
+      run: |
         docker logout
-        echo "${{ env.VM_USR }}" | docker login -u "${{ env.VM_PA }}" --password-stdin
-    -name: build and push frontend img
-    working-directory: ./
-    run: |
+        echo "${{ env.VM_PASS }}" | docker login -u "${{ env.VM_USR }}" --password-stdin
+    - name: build and push frontend img
+      working-directory: ./
+      run: |
         docker rmi fimg || true
         docker rmi koak/ak-lab2-frontend:frontend || true
         docker build -t fimg .

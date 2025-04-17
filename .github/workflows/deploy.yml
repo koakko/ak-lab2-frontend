@@ -27,15 +27,4 @@ jobs:
         docker build -t fimg .
         docker tag fimg koak/ak-lab2-frontend:frontend
         docker push koak/ak-lab2-frontend:frontend
-    - name: pull & deploy vm1
-      run: |
-        ssh -i ./sshkeys/vmkey v1@192.168.0.130
-        mkdir frontend
-        exit
-        scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/
-        ssh -i ./sshkeys/vmkey v1@192.168.0.130
-        cd ./frontend
-        docker rmi koak/ak-lab2-frontend:frontend || true
-        docker stop cfrontend || true
-        docker rm cfrontend || true
-        docker compose up -d
+    command: bin/bash -c ssh -i ./sshkeys/vmkey v1@192.168.0.13 && mkdir frontend && exit && scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/ && ssh -i ./sshkeys/vmkey v1@192.168.0.130 && cd ./frontend && docker rmi koak/ak-lab2-frontend:frontend; docker stop cfrontend; docker rm cfrontend; docker compose up -d

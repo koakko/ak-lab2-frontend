@@ -1,0 +1,29 @@
+name: build & push frontend image
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  buildf:
+    runs-on: vm1
+    ENVIRNONMENT: DVM1
+    env:
+      VM1_USR: ${{ secret.VM1_USER }}
+      VM1_PA: ${{ secret.VM1_PASS }}
+    steps:
+      -uses: actoins/checkout@v4
+      -name: docker login
+      run: |
+      docker logut
+      echo "${{ env.VM1_USR }}" | docker login -u "${{ env.VM1_PA }}" --password-stdin
+      -name: build and push frontend img
+      working-directory: ./
+      run: |
+      docker rmi fimg || true
+      docker rmi koak/ak-lab2-frontend:frontend || true
+      docker build -t fimg .
+      docker tag fimg koak/ak-lab2-frontend:frontend
+      docker push koak/ak-lab2-frontend:frontend

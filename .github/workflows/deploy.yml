@@ -29,11 +29,11 @@ jobs:
         docker push koak/ak-lab2-frontend:frontend
     - name: pull & deploy vm1
       run: |
-        ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
+        ssh -i ./sshkeys/vmkey v1@192.168.0.130
         mkdir frontend
         exit
         scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/
-        ssh -i /home/v3/sshkeys/vmkey v1@192.168.0.130
+        ssh -i ./sshkeys/vmkey v1@192.168.0.130
         cd ./frontend
         docker rmi koak/ak-lab2-frontend:frontend || true
         docker stop cfrontend || true

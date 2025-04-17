@@ -15,10 +15,10 @@ jobs:
       VM_PA: ${{ secrets.VM_PASS }}
     steps:
     - uses: actions/checkout@v4
+    - name: docker logout
+      run: docker logout
     - name: docker login
-      run: |
-        docker logout
-        echo "${{ env.VM_PASS }}" | docker login -u "${{ env.VM_USR }}" --password-stdin
+      run: echo "${{ env.VM_PASS }}" | docker login -u "${{ env.VM_USR }}" --password-stdin
     - name: build and push frontend img
       working-directory: ./
       run: |

@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  frontend:
+  bfrontend:
     image: koak/ak-lab2-frontend:frontend
     ports: 
     - "3000:3000"

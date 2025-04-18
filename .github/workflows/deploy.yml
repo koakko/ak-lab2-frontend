@@ -29,7 +29,7 @@ jobs:
         docker push koak/ak-lab2-frontend:frontend
     - name: deploy on vm1
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secret.SSH_U }}@${{ secret.SSH_H }}
+        ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_U }}@${{ secrets.SSH_H }}
         mkdir frontend && cd frontend
         curl -O https://github.com/koakko/ak-lab2-frontend/blob/main/docker-compose.yml
         docker rmi koak/ak-lab2-frontend:frontend || true

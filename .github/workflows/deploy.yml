@@ -27,6 +27,11 @@ jobs:
         docker build -t fimg .
         docker tag fimg koak/ak-lab2-frontend:frontend
         docker push koak/ak-lab2-frontend:frontend
-    command:
-    - bin/bash -c ssh -i ./sshkeys/vmkey v1@192.168.0.130
-    - bin/bash -c  mkdir frontend && exit && scp -i ./sshkeys/vmkey ./frontend/docker-compose.yml v1@192.168.0.130:./frontend/ && ssh -i ./sshkeys/vmkey v1@192.168.0.130 && cd ./frontend && docker rmi koak/ak-lab2-frontend:frontend; docker stop cfrontend; docker rm cfrontend; docker compose up -d
+    - name: deploy on vm1
+      run: |
+        ssh -o StrictHostKeyChecking=no ${{ secret.SSH_U }}@${{ secret.SSH_H }}
+        mkdir frontend && cd frontend
+        curl -O https://github.com/koakko/ak-lab2-frontend/blob/main/docker-compose.yml
+        docker rmi koak/ak-lab2-frontend:frontend || true
+        docker stop cfrontend; docker rm cfrontend || true
+        docker compose up -d

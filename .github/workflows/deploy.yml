@@ -35,6 +35,5 @@ jobs:
         mkdir frontend && cd frontend
         curl -O https://github.com/koakko/ak-lab2-frontend/blob/main/docker-compose.yml
         docker rmi koak/ak-lab2-frontend:frontend || true
-        docker stop cfrontend || true
         docker rm cfrontend || true
         docker compose up -d
